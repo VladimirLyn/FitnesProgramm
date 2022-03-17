@@ -1,9 +1,12 @@
 ﻿using System;
 
+
+
 namespace FitnesProgramm_BL.Model
 {
     #region Свойства
-    ///льзователь
+    ///Пользователь
+    [Serializable]
     public class User
     {/// <summary>
     /// Имя
