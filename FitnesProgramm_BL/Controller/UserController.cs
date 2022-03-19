@@ -15,6 +15,7 @@ namespace FitnesProgramm_BL.Controller
     {
         public List<User> Users { get; }
         public User CurrentUser { get; }
+        public bool isNewUser { get; } = false;
         public UserController(string userName)
         {
             if (string.IsNullOrWhiteSpace(userName))
@@ -24,12 +25,15 @@ namespace FitnesProgramm_BL.Controller
             Users = GetUsersData();
 
             CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
-            if(CurrentUser == null)
+            if (CurrentUser == null)
             {
-                CurrentUser = new User();
+                CurrentUser = new User(userName);
+                Users.Add(CurrentUser);
+                isNewUser = true;
+                Save();
             }
         }
-        public List<User> GetUsersData ()
+        public List<User> GetUsersData()
         {
             var formatter = new BinaryFormatter();
 
@@ -38,15 +42,23 @@ namespace FitnesProgramm_BL.Controller
 
                 if (formatter.Deserialize(fs) is List<User> users)
                 {
-                   return users;
+                    return users;
                 }
 
-               else
+                else
                 {
                     return new List<User>();
                 }
             }
             return null;
+        }
+        public void SetNewUserData(string genderName, DateTime birthDate, double weight, double height)
+        {
+            CurrentUser.Gender = new Gender(genderName);
+            CurrentUser.BirthDate = birthDate;
+            CurrentUser.Weight = weight;
+            CurrentUser.Height = height;
+            Save();
         }
         public void Save()
         {

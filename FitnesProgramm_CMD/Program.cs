@@ -14,10 +14,35 @@ namespace FitnesProgramm_CMD
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
-            
+            if (userController.isNewUser)
+            {
+                Console.Write("Введите пол: ");
+                var gender = Console.ReadLine();
+                DateTime birthDate;
+                double height;
 
-            userController.Save();
+                while (true)
+                {
 
+                    Console.Write("Ввдеите дату рождения (дд.мм.гггг): ");
+
+                    if (DateTime.TryParse(Console.ReadLine(), out birthDate))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Неверный формат даты рождения");
+                    }
+                }
+
+
+
+                userController.SetNewUserData();
+            }
+
+            Console.WriteLine(userController.CurrentUser);
+            Console.ReadLine();
         }
     }
 }
