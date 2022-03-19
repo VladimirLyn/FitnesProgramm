@@ -1,7 +1,9 @@
 ﻿
 using FitnesProgramm_BL.Model;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace FitnesProgramm_BL.Controller
@@ -9,45 +11,50 @@ namespace FitnesProgramm_BL.Controller
     /// <summary>
     /// Контролленр Пользователя
     /// </summary>
-    public  class UserController
+    public class UserController
     {
-        public User User { get; }
-        public UserController(string userName, string genderName, DateTime birthDay,double weight,double height)
+        public List<User> Users { get; }
+        public User CurrentUser { get; }
+        public UserController(string userName)
         {
-            //TODO: Проверка
-            var gender = new Gender(genderName);
-            User  = new User(userName, gender, birthDay, weight, height);
-        }
-        /// <summary>
-        /// Сохранение данных пользователя
-        /// </summary>
-        public void Save()
-        {
-            var formatter = new BinaryFormatter();
-            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate)) 
+            if (string.IsNullOrWhiteSpace(userName))
             {
-                formatter.Serialize(fs, User);
+                throw new ArgumentNullException("Имя не может быть 0", nameof(userName));
+            }
+            Users = GetUsersData();
+
+            CurrentUser = Users.SingleOrDefault(u => u.Name == userName);
+            if(CurrentUser == null)
+            {
+                CurrentUser = new User();
             }
         }
-        /// <summary>
-        /// получить данные пользователя
-        /// </summary>
-        /// <returns></returns>
-        /// <exception cref="FileLoadException"></exception>
-        public UserController ()
+        public List<User> GetUsersData ()
         {
             var formatter = new BinaryFormatter();
 
             using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
 
-               if( formatter.Deserialize(fs) is User user)
+                if (formatter.Deserialize(fs) is List<User> users)
                 {
-                    User = user;
+                   return users;
                 }
-                //TODO: Что делать если пользователя не прочитали ?
+
+               else
+                {
+                    return new List<User>();
+                }
             }
-            
+            return null;
+        }
+        public void Save()
+        {
+            var formatter = new BinaryFormatter();
+            using (var fs = new FileStream("users.dat", FileMode.OpenOrCreate))
+            {
+                formatter.Serialize(fs, Users);
+            }
         }
     }
 }

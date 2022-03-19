@@ -65,6 +65,13 @@ namespace FitnesProgramm_BL.Model
             Weight = weight;
             Height = height;
         }
+        public User(string name) 
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Имя пользователя пустое", nameof(name));
+            }
+        }
         public override string ToString()
         {
             return Name;

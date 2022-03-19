@@ -15,7 +15,7 @@ namespace FitnesProgramm_BL.Model
         /// <summary>
         /// Создаём новый пол
         /// </summary>
-        ///ццц <param name="name"></param>
+        /// <param name="name"></param>
         /// <exception cref="ArgumentNullException"></exception>
         public Gender(string name)
         {
