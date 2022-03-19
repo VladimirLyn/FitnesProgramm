@@ -5,7 +5,7 @@ namespace FitnesProgramm_BL.Model
     /// <summary>
     /// Пол
     /// </summary>
-   [Serializable]
+    [Serializable]
     public class Gender
     {
         /// <summary>

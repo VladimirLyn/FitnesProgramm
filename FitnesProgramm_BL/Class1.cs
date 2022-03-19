@@ -1,7 +1,4 @@
-﻿using System;
-
-
-namespace FitnesProgramm_BL
+﻿namespace FitnesProgramm_BL
 {
     public class Class1
     {

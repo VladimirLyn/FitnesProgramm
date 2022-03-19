@@ -9,8 +9,8 @@ namespace FitnesProgramm_BL.Model
     [Serializable]
     public class User
     {/// <summary>
-    /// Имя
-    /// </summary>
+     /// Имя
+     /// </summary>
         public string Name { get; }
         /// <summary>
         /// Пол
@@ -49,7 +49,7 @@ namespace FitnesProgramm_BL.Model
             }
             if (birthDate < DateTime.Parse("01.01.1900") || birthDate >= DateTime.Now)
             {
-                throw new ArgumentException("Невозможная дата рождения",nameof(birthDate));
+                throw new ArgumentException("Невозможная дата рождения", nameof(birthDate));
             }
             if (weight <= 0)
             {
@@ -57,7 +57,7 @@ namespace FitnesProgramm_BL.Model
             }
             if (height <= 0)
             {
-                throw new ArgumentException("Рост не может быть меньше 0",nameof(height));
+                throw new ArgumentException("Рост не может быть меньше 0", nameof(height));
             }
             #endregion
 
@@ -67,7 +67,7 @@ namespace FitnesProgramm_BL.Model
             Weight = weight;
             Height = height;
         }
-        public User(string name) 
+        public User(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
